@@ -24,7 +24,7 @@ def cut_lawn():
     tool = toolsForLandscaping[landscaping_game["tool"]]
     
     ## checking if the profit in landscaping game is 1000 to win game
-    if landscaping_game['money'] >= 1000 or landscaping_game["tool"] >= 5:
+    if landscaping_game['money'] >= 1000:
         check_user_won_game()
     else:
         if tool['toolname'] == "teeth":
@@ -50,19 +50,22 @@ def checking_stats_of_landscaping_of_user():
 
 ## changing/upgrading tools
 def changing_upgrade_checkingCosts_tools():
-    if landscaping_game["tool"] >= (len(toolsForLandscaping) - 1):
-        print("\033[4m\033[1m No more tools to change or upgrade to \033[0m\033[0m......")
-    
     next_tool_landscaping = toolsForLandscaping[landscaping_game["tool"] + 1]
     ## checking if user has the money to purchase the tools
     if landscaping_game["money"] < next_tool_landscaping["cost_to_buy"]:
         print("\033[4m\033[1m Not enough money to buy the tools.... \033[0m\033[0m")
+    
     else:
         print(f"Changing/Upgrading to the next tool known as \033[4m\033[1m {next_tool_landscaping['toolname']}\033[0m\033[0m")
         ## Subtracting the costs to buy tools from the total amount accumulated from landscaping
         landscaping_game["money"] -= next_tool_landscaping["cost_to_buy"]
         ## changing tool
         landscaping_game["tool"] += 1
+    
+    
+    if landscaping_game["tool"] > (len(toolsForLandscaping) - 1):
+        print("\033[4m\033[1m No more tools to change or upgrade to \033[0m\033[0m......")
+        check_user_won_game()
 
 ## resetting the total profit in the landscaping game
 def resetting_values():
@@ -72,18 +75,11 @@ def resetting_values():
 
 ## checking if user won game
 def check_user_won_game():
-    #if landscaping_game['money'] >= 1000:
-    if landscaping_game['money'] >= 1000:
-        print("You won the Landscaping Game. \033[4m\033[1mCongratulations.......\033[0m\033[0m")
-        return True
-    else:
-        return False
-    #    while landscaping_game['money'] == 1000 or landscaping_game['tool'] >= 5:
-    #        break
+    while(True):
+        if landscaping_game['money'] >= 1000 or landscaping_game["tool"] > len(landscaping_game) - 1:
+            print("You won the Landscaping Game. \033[4m\033[1mCongratulations.......\033[0m\033[0m")
+            break;
         
-#    else:
-#        return False
-
 ## quit/kill the game
 def quit_kill_game():
     print(f"\033[4m\033[1m {game_over} \033[0m\033[0m")
